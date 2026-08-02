@@ -103,6 +103,6 @@ class CatheterReachVectorEnv(gym.Env):
 
 def make_envs(args, run_name: str):
     env_kwargs = dict(num_envs=args.num_envs, max_episode_steps=args.num_steps)
-    envs = CatheterReachVectorEnv(num_envs=args.num_envs)
-    eval_envs = CatheterReachVectorEnv(num_envs=args.num_eval_envs)
+    envs = CatheterReachVectorEnv(num_envs=args.num_envs, max_episode_steps=args.num_steps)
+    eval_envs = CatheterReachVectorEnv(num_envs=args.num_eval_envs, max_episode_steps=args.num_steps)
     return envs, eval_envs, env_kwargs
