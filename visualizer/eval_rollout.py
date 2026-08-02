@@ -15,7 +15,7 @@ cli_args = parser.parse_args()
 
 args = Args()
 args.env_id = "CatheterReach-v0"
-args.checkpoint = cli_args.checkpoint
+args.checkpoint = None
 args.num_envs = cli_args.num_episodes
 device = torch.device("cuda")
 
@@ -24,6 +24,7 @@ args.obs_dim = env.single_observation_space.shape[0]
 args.action_dim = env.single_action_space.shape[0]
 
 agent = TD3Agent(env, device, args)
+agent.load_model(cli_args.checkpoint)
 agent.eval_mode()
 
 obs, _ = env.reset()
