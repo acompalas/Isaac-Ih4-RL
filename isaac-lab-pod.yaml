@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: anderson-isaaclab
+  namespace: erl-ucsd-supp
+spec:
+  restartPolicy: Never
+  imagePullSecrets:
+  - name: ngc-secret
+  tolerations:
+  - key: "nautilus.io/reservation"
+    operator: "Equal"
+    value: "erl-ucsd"
+    effect: "NoSchedule"
+  containers:
+  - name: isaac-lab
+    image: nvcr.io/nvidia/isaac-lab:2.1.0
+    command: ["sleep", "infinity"]
+    resources:
+      limits:
+        nvidia.com/gpu: 1
+        cpu: "8"
+        memory: 16Gi
+      requests:
+        nvidia.com/gpu: 1
+        cpu: "8"
+        memory: 16Gi
+    env:
+    - name: ACCEPT_EULA
+      value: "Y"
+    - name: PRIVACY_CONSENT
+      value: "Y"
+    volumeMounts:
+    - name: dshm
+      mountPath: /dev/shm
+  volumes:
+  - name: dshm
+    emptyDir:
+      medium: Memory
+      sizeLimit: 16Gi
+  nodeSelector:
+    nvidia.com/gpu.product: NVIDIA-GeForce-RTX-3090

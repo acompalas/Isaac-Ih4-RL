@@ -7,7 +7,8 @@ import torch
 import tyro
 
 from rainbow_demorl.agents import *
-from rainbow_demorl.envs.maniskill import find_max_episode_steps_value, make_envs
+from rainbow_demorl.envs import make_envs
+from rainbow_demorl.envs.maniskill import find_max_episode_steps_value
 from rainbow_demorl.trainer.offline_trainer import OfflineTrainer
 from rainbow_demorl.trainer.online_trainer import OnlineTrainer
 from rainbow_demorl.utils.common import Args, safe_exit_for_environment
@@ -45,7 +46,10 @@ if __name__ == "__main__":
     ## Convenience variables
     args.obs_dim = envs.single_observation_space.shape[0]
     args.action_dim = envs.single_action_space.shape[0]
-    args.env_horizon = find_max_episode_steps_value(envs._env)
+    if args.env_id.startswith("Catheter"):
+        args.env_horizon = envs.max_episode_steps
+    else:
+        args.env_horizon = find_max_episode_steps_value(envs._env)
     args.bin_size = (args.vmax - args.vmin) / (args.num_bins - 1)
 
     if args.demo_type is None:

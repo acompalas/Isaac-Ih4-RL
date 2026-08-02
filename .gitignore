@@ -1,31 +1,8 @@
-# Python
 __pycache__/
-*.py[cod]
-*$py.class
-*.egg-info/
-*.egg
-dist/
-build/
-.eggs/
-
-# Virtual environments
-*venv*/
-env/
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# Experiment outputs
-wandb/
-runs/
+*.pyc
+.venv/
+*.pt
+*.pth
+outputs/
+logs/
 videos/
-demos/
-checkpoints/
-pers_data/
-
-# OS
-.DS_Store
-Thumbs.db
